@@ -8,6 +8,7 @@ import '../Shared/constant.dart';
 import '../Widgets/text_widget.dart';
 import '../Widgets/widget.dart';
 import '../helper/helper_function.dart';
+import 'chat_page.dart';
 
 class SearchPage extends StatefulWidget {
   const SearchPage({super.key});
@@ -74,6 +75,7 @@ class _SearchPageState extends State<SearchPage> {
                 Expanded(
                   child: TextField(
                     controller: searchController,
+                    style: const TextStyle(color: Colors.white),
                     decoration: const InputDecoration(
                       border: InputBorder.none,
                       hintText: "Search..",
@@ -95,9 +97,11 @@ class _SearchPageState extends State<SearchPage> {
                       color: Colors.white.withOpacity(0.1),
                       borderRadius: BorderRadius.circular(40),
                     ),
-                    child: const Icon(
-                      Icons.search,
-                      color: Colors.white,
+                    child: const Center(
+                      child: Icon(
+                        Icons.search,
+                        color: Colors.white,
+                      ),
                     ),
                   ),
                 )
@@ -186,12 +190,12 @@ class _SearchPageState extends State<SearchPage> {
             });
             showSnackbar(context, Colors.green, "Successfully joined he group");
             Future.delayed(const Duration(seconds: 2), () {
-              // nextScreen(
-              //     context,
-              //     ChatPage(
-              //         groupId: groupId,
-              //         groupName: groupName,
-              //         userName: userName));
+              nextScreen(
+                  context,
+                  ChatPage(
+                      groupId: groupId,
+                      groupName: groupName,
+                      userName: userName));
             });
           } else {
             setState(() {
