@@ -1,8 +1,11 @@
 import 'package:chat_app/shared/constant.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
 import '../Widgets/message_tile.dart';
+import '../Widgets/text_widget.dart';
 import '../Widgets/widget.dart';
 import '../services/database_services.dart';
 import 'group_info.dart';
@@ -54,26 +57,50 @@ class _ChatPageState extends State<ChatPage> {
       appBar: AppBar(
         centerTitle: true,
         elevation: 0,
-        title: Text(widget.groupName),
+        title: TextWidget(
+          title: widget.groupName,
+          fontSize: 28,
+          fontWeight: FontWeight.bold,
+        ),
         backgroundColor: Theme.of(context).primaryColor,
         actions: [
           IconButton(
-              onPressed: () {
-                nextScreen(
-                    context,
-                    GroupInfo(
-                      groupId: widget.groupId,
-                      groupName: widget.groupName,
-                      adminName: admin,
-                    ));
-              },
-              icon: const Icon(Icons.info))
+            onPressed: () {
+              nextScreen(
+                context,
+                GroupInfo(
+                  groupId: widget.groupId,
+                  groupName: widget.groupName,
+                  adminName: admin,
+                ),
+              );
+            },
+            icon: const Icon(Icons.info),
+          )
         ],
       ),
       body: Stack(
-        children: <Widget>[
-          // chat messages here
-          chatMessages(),
+        children: [
+          StreamBuilder(
+            stream: chats,
+            builder: (context, AsyncSnapshot snapshot) {
+              if (snapshot.hasData) {
+                return ListView.builder(
+                  itemCount: snapshot.data!.docs.length,
+                  itemBuilder: (context, index) {
+                    return MessageTile(
+                      message: snapshot.data!.docs[index]['message'],
+                      sender: snapshot.data!.docs[index]["sender"],
+                      sentByMe: widget.userName ==
+                          snapshot.data!.docs[index]['sender'],
+                    );
+                  },
+                );
+              } else {
+                return Container();
+              }
+            },
+          ),
           Container(
             alignment: Alignment.bottomCenter,
             width: width,
@@ -87,6 +114,8 @@ class _ChatPageState extends State<ChatPage> {
                 children: [
                   Expanded(
                     child: TextFormField(
+                      keyboardType: TextInputType.multiline,
+                      maxLines: null,
                       controller: messageController,
                       style: const TextStyle(color: Colors.white),
                       decoration: const InputDecoration(
@@ -124,27 +153,6 @@ class _ChatPageState extends State<ChatPage> {
           )
         ],
       ),
-    );
-  }
-
-  chatMessages() {
-    return StreamBuilder(
-      stream: chats,
-      builder: (context, AsyncSnapshot snapshot) {
-        return snapshot.hasData
-            ? ListView.builder(
-                itemCount: snapshot.data.docs.length,
-                itemBuilder: (context, index) {
-                  return MessageTile(
-                    message: snapshot.data.docs[index]['message'],
-                    sender: snapshot.data.docs[index]['sender'],
-                    sentByMe:
-                        widget.userName == snapshot.data.docs[index]['sender'],
-                  );
-                },
-              )
-            : Container();
-      },
     );
   }
 

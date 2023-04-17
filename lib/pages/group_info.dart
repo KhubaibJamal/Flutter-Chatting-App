@@ -4,6 +4,8 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 import '../Widgets/text_widget.dart';
+import '../Widgets/widget.dart';
+import 'home_page.dart';
 
 class GroupInfo extends StatefulWidget {
   const GroupInfo(
@@ -21,6 +23,7 @@ class GroupInfo extends StatefulWidget {
 
 class _GroupInfoState extends State<GroupInfo> {
   Stream? members;
+  Constant constant = Constant();
 
   @override
   void initState() {
@@ -52,22 +55,58 @@ class _GroupInfoState extends State<GroupInfo> {
         centerTitle: true,
         actions: [
           IconButton(
-            onPressed: () {},
-            icon: const Icon(
-              Icons.exit_to_app,
-              size: 30,
-            ),
-          )
+              onPressed: () {
+                showDialog(
+                    barrierDismissible: false,
+                    context: context,
+                    builder: (context) {
+                      return AlertDialog(
+                        title: const Text("Exit"),
+                        content:
+                            const Text("Are you sure you exit the group? "),
+                        actions: [
+                          IconButton(
+                            onPressed: () {
+                              Navigator.pop(context);
+                            },
+                            icon: const Icon(
+                              Icons.cancel,
+                              color: Colors.red,
+                            ),
+                          ),
+                          IconButton(
+                            onPressed: () async {
+                              DatabaseServices(
+                                      uid: FirebaseAuth
+                                          .instance.currentUser!.uid)
+                                  .toggleGroupJoin(
+                                      widget.groupId,
+                                      constant.getName(widget.adminName),
+                                      widget.groupName)
+                                  .whenComplete(() {
+                                nextScreenReplace(context, const HomePage());
+                              });
+                            },
+                            icon: const Icon(
+                              Icons.done,
+                              color: Colors.green,
+                            ),
+                          ),
+                        ],
+                      );
+                    });
+              },
+              icon: const Icon(Icons.exit_to_app))
         ],
       ),
       body: Container(
         padding: EdgeInsets.symmetric(
-            horizontal: Constant().defaultPadding,
-            vertical: Constant().defaultPadding),
+            horizontal: constant.defaultPadding,
+            vertical: constant.defaultPadding),
         child: Column(
           children: [
             Container(
-              padding: EdgeInsets.all(Constant().defaultPadding),
+              padding: EdgeInsets.all(constant.defaultPadding),
               decoration: BoxDecoration(
                 color: Theme.of(context).primaryColor.withOpacity(0.2),
                 borderRadius: BorderRadius.circular(30),
@@ -85,11 +124,10 @@ class _GroupInfoState extends State<GroupInfo> {
                     ),
                   ),
                   SizedBox(
-                    width: Constant().defaultPadding,
+                    width: constant.defaultPadding,
                   ),
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
-                    // mainAxisAlignment: MainAxisAlignment.start,
                     children: [
                       Text(
                         "Group: ${widget.groupName}",
@@ -98,7 +136,7 @@ class _GroupInfoState extends State<GroupInfo> {
                       const SizedBox(
                         height: 5,
                       ),
-                      Text("Admin: ${Constant().getName(widget.adminName)}")
+                      Text("Admin: ${constant.getName(widget.adminName)}")
                     ],
                   )
                 ],
@@ -117,14 +155,14 @@ class _GroupInfoState extends State<GroupInfo> {
                       itemBuilder: (context, index) {
                         return Container(
                           padding: EdgeInsets.symmetric(
-                              horizontal: Constant().defaultPadding / 3,
-                              vertical: Constant().defaultPadding / 2),
+                              horizontal: constant.defaultPadding / 3,
+                              vertical: constant.defaultPadding / 2),
                           child: ListTile(
                             leading: CircleAvatar(
                               radius: 30,
                               backgroundColor: Theme.of(context).primaryColor,
                               child: TextWidget(
-                                title: Constant()
+                                title: constant
                                     .getName(snapshot.data['members'][index])
                                     .substring(0, 1)
                                     .toUpperCase(),
@@ -132,9 +170,9 @@ class _GroupInfoState extends State<GroupInfo> {
                                 fontWeight: FontWeight.w500,
                               ),
                             ),
-                            title: Text(Constant()
+                            title: Text(constant
                                 .getName(snapshot.data['members'][index])),
-                            subtitle: Text(Constant()
+                            subtitle: Text(constant
                                 .getId(snapshot.data['members'][index])),
                           ),
                         );

@@ -59,7 +59,7 @@ class DatabaseServices {
   // getting the chats
   getChat(String groupId) async {
     return groupCollection
-        .doc('groupId')
+        .doc(groupId)
         .collection('messages')
         .orderBy('time')
         .snapshots();
