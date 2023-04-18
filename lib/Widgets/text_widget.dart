@@ -14,7 +14,8 @@ class TextWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return Text(
       title,
-      style: TextStyle(fontSize: fontSize, fontWeight: fontWeight),
+      style: TextStyle(
+          fontSize: fontSize, fontWeight: fontWeight, color: Colors.white),
     );
   }
 }

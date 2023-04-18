@@ -129,7 +129,10 @@ class DrawerListTile extends StatelessWidget {
         horizontal: Constant().defaultPadding,
         vertical: Constant().defaultPadding / 2,
       ),
-      leading: Icon(leadingIcon),
+      leading: Icon(
+        leadingIcon,
+        size: 30,
+      ),
       title: Text(
         title,
         style: const TextStyle(

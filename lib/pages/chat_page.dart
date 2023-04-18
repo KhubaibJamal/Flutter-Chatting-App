@@ -55,6 +55,7 @@ class _ChatPageState extends State<ChatPage> {
     double width = MediaQuery.of(context).size.width;
     return Scaffold(
       appBar: AppBar(
+        iconTheme: const IconThemeData(color: Colors.white),
         centerTitle: true,
         elevation: 0,
         title: TextWidget(
@@ -75,7 +76,9 @@ class _ChatPageState extends State<ChatPage> {
                 ),
               );
             },
-            icon: const Icon(Icons.info),
+            icon: const Icon(
+              Icons.info,
+            ),
           )
         ],
       ),
@@ -109,7 +112,7 @@ class _ChatPageState extends State<ChatPage> {
                   horizontal: constant.defaultPadding,
                   vertical: constant.defaultPadding - 2),
               width: width,
-              color: Colors.grey[700],
+              color: const Color(0xff6B728E),
               child: Row(
                 children: [
                   Expanded(

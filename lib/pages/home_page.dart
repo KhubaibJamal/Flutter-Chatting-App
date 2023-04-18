@@ -68,11 +68,12 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        iconTheme: const IconThemeData(color: Colors.white),
         elevation: 0,
         centerTitle: true,
         backgroundColor: Theme.of(context).primaryColor,
         title: const TextWidget(
-          title: "Groups",
+          title: "Chats",
           fontSize: 28,
           fontWeight: FontWeight.bold,
         ),

@@ -38,6 +38,7 @@ class _MyAppState extends State<MyApp> {
       debugShowCheckedModeBanner: false,
       title: 'Chatting App',
       theme: ThemeData(
+        useMaterial3: true,
         primaryColor: Constant().primaryColor,
         scaffoldBackgroundColor: Colors.white,
       ),

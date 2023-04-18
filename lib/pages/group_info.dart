@@ -45,6 +45,7 @@ class _GroupInfoState extends State<GroupInfo> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        iconTheme: const IconThemeData(color: Colors.white),
         elevation: 0,
         backgroundColor: Theme.of(context).primaryColor,
         title: const TextWidget(
@@ -96,7 +97,9 @@ class _GroupInfoState extends State<GroupInfo> {
                       );
                     });
               },
-              icon: const Icon(Icons.exit_to_app))
+              icon: const Icon(
+                Icons.exit_to_app,
+              ))
         ],
       ),
       body: Container(
