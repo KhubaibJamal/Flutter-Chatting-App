@@ -28,13 +28,13 @@ class TextFormFieldWidget extends StatelessWidget {
         labelStyle:
             const TextStyle(color: Colors.black, fontWeight: FontWeight.w300),
         focusedBorder: const OutlineInputBorder(
-          borderSide: BorderSide(color: Color(0xFFee7b64), width: 2),
+          borderSide: BorderSide(color: Color(0xff6B728E), width: 2),
         ),
         enabledBorder: const OutlineInputBorder(
-          borderSide: BorderSide(color: Color(0xFFee7b64), width: 2),
+          borderSide: BorderSide(color: Color(0xff6B728E), width: 2),
         ),
         errorBorder: const OutlineInputBorder(
-          borderSide: BorderSide(color: Color(0xFFee7b64), width: 2),
+          borderSide: BorderSide(color: Color(0xff6B728E), width: 2),
         ),
       ),
       onChanged: onChange,

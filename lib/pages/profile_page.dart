@@ -43,7 +43,7 @@ class _ProfilePageState extends State<ProfilePage> {
         profileOnPress: () {},
       ),
       body: Container(
-        padding: const EdgeInsets.symmetric(horizontal: 40, vertical: 140),
+        padding: const EdgeInsets.symmetric(horizontal: 40, vertical: 100),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
@@ -63,7 +63,7 @@ class _ProfilePageState extends State<ProfilePage> {
               ],
             ),
             const Divider(
-              height: 20,
+              height: 15,
             ),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
