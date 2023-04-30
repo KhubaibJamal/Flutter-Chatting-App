@@ -33,11 +33,11 @@ class _ChatPageState extends State<ChatPage> {
 
   @override
   void initState() {
-    getChatandAdmin();
+    getChatAndAdmin();
     super.initState();
   }
 
-  getChatandAdmin() {
+  getChatAndAdmin() {
     DatabaseServices().getChat(widget.groupId).then((val) {
       setState(() {
         chats = val;
@@ -48,6 +48,12 @@ class _ChatPageState extends State<ChatPage> {
         admin = val;
       });
     });
+  }
+
+  @override
+  void dispose() {
+    messageController.dispose();
+    super.dispose();
   }
 
   @override
